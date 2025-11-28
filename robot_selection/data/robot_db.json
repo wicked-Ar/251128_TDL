@@ -1,0 +1,62 @@
+{
+  "panda": {
+    "robot_id": "panda",
+    "payload": 3.0,
+    "reach": 0.855,
+    "dof": 7,
+    "max_velocity": 2.175,
+    "max_acceleration": 15.0,
+    "manufacturer": "Franka Emika",
+    "description": "High-precision collaborative robot with 7 DoF"
+  },
+  "ur5e": {
+    "robot_id": "ur5e",
+    "payload": 5.0,
+    "reach": 0.85,
+    "dof": 6,
+    "max_velocity": 3.14,
+    "max_acceleration": 10.0,
+    "manufacturer": "Universal Robots",
+    "description": "Versatile collaborative robot with 6 DoF"
+  },
+  "doosan_h2515": {
+    "robot_id": "doosan_h2515",
+    "payload": 25.0,
+    "reach": 1.5,
+    "dof": 6,
+    "max_velocity": 3.49,
+    "max_acceleration": 15.0,
+    "manufacturer": "Doosan Robotics",
+    "description": "Heavy-duty collaborative robot for industrial tasks"
+  },
+  "doosan_m1013": {
+    "robot_id": "doosan_m1013",
+    "payload": 10.0,
+    "reach": 1.3,
+    "dof": 6,
+    "max_velocity": 4.01,
+    "max_acceleration": 12.0,
+    "manufacturer": "Doosan Robotics",
+    "description": "Medium-payload collaborative robot"
+  },
+  "doosan_m0609": {
+    "robot_id": "doosan_m0609",
+    "payload": 6.0,
+    "reach": 0.9,
+    "dof": 6,
+    "max_velocity": 3.92,
+    "max_acceleration": 12.0,
+    "manufacturer": "Doosan Robotics",
+    "description": "Compact collaborative robot for smaller workspaces"
+  },
+  "kuka_iiwa14": {
+    "robot_id": "kuka_iiwa14",
+    "payload": 14.0,
+    "reach": 0.82,
+    "dof": 7,
+    "max_velocity": 1.71,
+    "max_acceleration": 8.5,
+    "manufacturer": "KUKA",
+    "description": "Sensitive collaborative robot with torque sensors"
+  }
+}

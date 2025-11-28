@@ -1,0 +1,41 @@
+# Generated TDL v1
+# Timestamp: 2025-11-26T13:18:36.910021
+# User Command: Pick the orange
+# ============================================================
+
+GOAL Initialize_Process()
+{
+    SPAWN SetTool(0) WITH WAIT;
+    SPAWN SetWorkpieceWeight(0.15, Trans(0, 0, 50, 0, 0, 0)) WITH WAIT;
+    SPAWN SetJointVelocity(50) WITH WAIT;
+    SPAWN SetJointAcceleration(50) WITH WAIT;
+    // Open the gripper before starting
+    SPAWN SetDigitalOutput(0, 0) WITH WAIT;
+}
+
+GOAL Execute_Process()
+{
+    // Define key positions based on the orange's location (0, -200, 660)
+    SPAWN Assign(pre_pick_pos, PosX(0, -200, 760, 0, 180, 0)) WITH WAIT;
+    SPAWN Assign(pick_pos, PosX(0, -200, 660, 0, 180, 0)) WITH WAIT;
+    SPAWN Assign(post_pick_pos, PosX(0, -200, 760, 0, 180, 0)) WITH WAIT;
+
+    // 1. Move to a safe position above the orange
+    SPAWN MoveLinear(pre_pick_pos, 50, 50, 0, 0.0, None) WITH WAIT;
+
+    // 2. Move down to the orange
+    SPAWN MoveLinear(pick_pos, 25, 50, 0, 0.0, None) WITH WAIT;
+
+    // 3. Close the gripper to pick the orange
+    SPAWN SetDigitalOutput(0, 1) WITH WAIT;
+    SPAWN Delay(1.0) WITH WAIT;
+
+    // 4. Lift the orange straight up
+    SPAWN MoveLinear(post_pick_pos, 25, 50, 0, 0.0, None) WITH WAIT;
+}
+
+GOAL Finalize_Process()
+{
+    // Move to a safe home position after the task is complete
+    SPAWN MoveJoint(PosJ(0, 0, 0, 0, 0, 0), 50, 50, 0, 0.0, None) WITH WAIT;
+}

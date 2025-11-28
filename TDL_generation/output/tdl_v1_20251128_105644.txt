@@ -1,0 +1,42 @@
+# Generated TDL v1
+# Timestamp: 2025-11-28T10:56:44.073075
+# User Command: Pick the banana
+# ============================================================
+
+GOAL Initialize_Process()
+{
+    SPAWN SetTool(0) WITH WAIT;
+    SPAWN SetWorkpieceWeight(0.12, Trans(0, 0, 50, 0, 0, 0)) WITH WAIT;
+    SPAWN SetJointVelocity(50) WITH WAIT;
+    SPAWN SetJointAcceleration(50) WITH WAIT;
+    SPAWN SetTaskVelocity(500) WITH WAIT;
+    SPAWN SetTaskAcceleration(1000) WITH WAIT;
+}
+
+GOAL Execute_Process()
+{
+    // Define pick position for the banana
+    SPAWN Assign(p_banana_pick, PosX(-101, 199, 645, 0, 180, 0)) WITH WAIT;
+    
+    // Define an approach position 100mm above the banana
+    SPAWN Assign(p_banana_approach, p_banana_pick * Trans(0, 0, 100, 0, 0, 0)) WITH WAIT;
+    
+    // 1. Move to the approach position above the banana
+    SPAWN MoveLinear(p_banana_approach, 50, 50, 0, 0.0, None) WITH WAIT;
+    
+    // 2. Move down to the banana
+    SPAWN MoveLinear(p_banana_pick, 25, 50, 0, 0.0, None) WITH WAIT;
+    
+    // 3. Close the gripper (assuming DO port 0 controls the gripper)
+    SPAWN SetDigitalOutput(0, 1) WITH WAIT;
+    SPAWN Delay(0.5) WITH WAIT;
+    
+    // 4. Move back up to the approach position
+    SPAWN MoveLinear(p_banana_approach, 25, 50, 0, 0.0, None) WITH WAIT;
+}
+
+GOAL Finalize_Process()
+{
+    // Move to a safe home position
+    SPAWN MoveJoint(PosJ(0, 0, 0, 0, 0, 0), 50, 50, 0, 0.0, None) WITH WAIT;
+}

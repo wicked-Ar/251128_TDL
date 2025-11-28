@@ -1,0 +1,47 @@
+# Generated TDL v1
+# Timestamp: 2025-11-26T11:38:49.723821
+# User Command: Pick the banana
+# ============================================================
+
+GOAL Initialize_Process()
+{
+    // Set default speeds and tool
+    SPAWN SetTool(0) WITH WAIT;
+    SPAWN SetJointVelocity(50) WITH WAIT;
+    SPAWN SetJointAcceleration(50) WITH WAIT;
+    SPAWN SetTaskVelocity(250) WITH WAIT;
+    SPAWN SetTaskAcceleration(500) WITH WAIT;
+    // Ensure gripper is open initially
+    SPAWN SetDigitalOutput(0, 0) WITH WAIT;
+}
+
+GOAL Execute_Process()
+{
+    // Define positions based on the banana's location
+    SPAWN Assign(banana_pos, PosX(-101, 199, 645, 0, 180, 0)) WITH WAIT;
+    SPAWN Assign(approach_pos, PosX(-101, 199, 745, 0, 180, 0)) WITH WAIT;
+
+    // 1. Move to a safe position above the banana
+    SPAWN PrintLog("Moving to approach position") WITH WAIT;
+    SPAWN MoveLinear(approach_pos, 50, 50, 0, 0.0, None) WITH WAIT;
+
+    // 2. Move down to the banana
+    SPAWN PrintLog("Moving down to pick banana") WITH WAIT;
+    SPAWN MoveLinear(banana_pos, 25, 50, 0, 0.0, None) WITH WAIT;
+
+    // 3. Close the gripper (simulated with digital output)
+    SPAWN PrintLog("Closing gripper") WITH WAIT;
+    SPAWN SetDigitalOutput(0, 1) WITH WAIT;
+    SPAWN Delay(1.0) WITH WAIT;
+
+    // 4. Lift the banana up
+    SPAWN PrintLog("Lifting banana") WITH WAIT;
+    SPAWN MoveLinear(approach_pos, 25, 50, 0, 0.0, None) WITH WAIT;
+}
+
+GOAL Finalize_Process()
+{
+    // Move to a safe home position after the task is complete
+    SPAWN PrintLog("Task finished, moving to home position") WITH WAIT;
+    SPAWN MoveJoint(PosJ(0, 0, 0, 0, 0, 0), 50, 50, 0, 0.0, None) WITH WAIT;
+}

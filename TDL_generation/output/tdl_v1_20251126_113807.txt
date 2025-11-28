@@ -1,0 +1,40 @@
+# Generated TDL v1
+# Timestamp: 2025-11-26T11:38:07.816188
+# User Command: Pick the apple
+# ============================================================
+
+GOAL Initialize_Process()
+{
+    SPAWN SetTool(0) WITH WAIT;
+    SPAWN SetJointVelocity(50) WITH WAIT;
+    SPAWN SetJointAcceleration(50) WITH WAIT;
+    SPAWN SetTaskVelocity(100) WITH WAIT;
+    SPAWN SetTaskAcceleration(100) WITH WAIT;
+    SPAWN SetDigitalOutput(0, 0) WITH WAIT;
+}
+
+GOAL Execute_Process()
+{
+    // Define variables for key positions
+    SPAWN Assign(approach_pos, PosX(100, 150, 765, 0, 180, 0)) WITH WAIT;
+    SPAWN Assign(pick_pos, PosX(100, 150, 665, 0, 180, 0)) WITH WAIT;
+
+    // Move to a safe position above the apple
+    SPAWN MoveLinear(approach_pos, 50, 50, 0, 0.0, None) WITH WAIT;
+
+    // Move down to the apple
+    SPAWN MoveLinear(pick_pos, 25, 50, 0, 0.0, None) WITH WAIT;
+
+    // Close the gripper (simulated with digital output)
+    SPAWN SetDigitalOutput(0, 1) WITH WAIT;
+    SPAWN Delay(0.5) WITH WAIT;
+
+    // Lift the apple straight up
+    SPAWN MoveLinear(approach_pos, 25, 50, 0, 0.0, None) WITH WAIT;
+}
+
+GOAL Finalize_Process()
+{
+    // Move to a safe home position
+    SPAWN MoveJoint(PosJ(0, 0, 0, 0, 0, 0), 50, 50, 0, 0.0, None) WITH WAIT;
+}
